@@ -6,7 +6,7 @@ import Task from "./pages/Task";
 import TaskDetails from "./pages/TaskDetails";
 import Trash from "./pages/Trash";
 import User from "./pages/User";
-
+import HomePage from "./pages/home";
 function Layout() {
   const user = "";
   const location = useLocation();
@@ -43,6 +43,7 @@ function App() {
           <Route path="/trash" element={<Trash />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
       <Toaster richColors />
     </main>
