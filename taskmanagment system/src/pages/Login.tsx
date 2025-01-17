@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import TextBox from "../components/TextBox";
 import Button from "../components/Button";
+import { useSelector } from "react-redux";
 
 const Login = () => {
-  const [user] = useState<string | null>(null); // Example user state
+  const { user } = useSelector((state: any) => state.auth);
   const {
     register,
     handleSubmit,
@@ -22,8 +23,10 @@ const Login = () => {
     }
   }, [user, navigate]);
 
-  function SubmitHandler() {}
-
+  const SubmitHandler = async () => {
+    console.log("submit");
+  };
+  console.log(user);
   return (
     <div className="w-full flex justify-center items-center min-h-screen flex-col lg:flex-row ">
       <div className="w-full md:w-auto flex gap-0 md:gap-40 flex-col md:flex-row items-center justify-center ">
@@ -42,7 +45,7 @@ const Login = () => {
             </p>
           </div>
         </div>
-        <div className="w-full bg-[#f7f2f2] shadow-lg md:w-1/3 p-4 md:p-1 flex justify-center items-center flex-col">
+        <div className="w-full bg-[#fdfdfd] rounded-lg border-t-8 border-b-8  border-b-lime-600 border-t-lime-500 shadow-lg md:w-1/3 p-4 md:p-1 flex justify-center items-center flex-col">
           <form
             onSubmit={handleSubmit(SubmitHandler)}
             className="form-container w-full md:w-[400px] flex flex-col gap-y-8 px-10 py-14 "
@@ -70,7 +73,7 @@ const Login = () => {
                 type="password"
                 name="password"
                 label="Password"
-                className="w-full rounded-full"
+                className="w-full rounded-full "
                 register={register}
                 error={errors.password}
               />

@@ -35,7 +35,7 @@ const TextBox = React.forwardRef<HTMLInputElement, TextBoxProps>(
             ref={ref}
             aria-invalid={error ? "true" : "false"}
             className={clsx(
-              "px-3 py-2 2xl:py-3 border border-blue-300  text-gray-200 outline-none focus:ring-2 ring-green-500",
+              "px-3 py-2 2xl:py-3 border border-blue-300  text-gray-800 outline-none focus:ring-2 ring-green-500",
               className
             )}
           />

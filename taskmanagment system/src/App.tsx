@@ -1,5 +1,6 @@
 import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
+import Sidebar from "./components/sidebar";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Task from "./pages/Task";
@@ -12,8 +13,8 @@ function Layout() {
   const location = useLocation();
   return user ? (
     <div className="w-full h-screen flex flex-col md:flex-row ">
-      <div className="w-1/5 h-screen bg-slate-200 sticky top-0 hidden md:block">
-        {/* <Sidebar/> */}
+      <div className="w-1/5 h-screen bg-green-600 sticky top-0 hidden md:block">
+        <Sidebar />
       </div>
       {/* mobile sidebar */}
       <div className="flex-1 overflow-y-auto">
