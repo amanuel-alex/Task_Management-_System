@@ -14,12 +14,13 @@ function Layout() {
   const location = useLocation();
   return user ? (
     <div className="w-full h-screen flex flex-col md:flex-row ">
-      <div className="w-1/5 h-screen bg-green-600 sticky top-0 hidden md:block">
+      <div className="w-1/5 h-screen bg-white sticky top-0 hidden md:block">
         <Sidebar />
       </div>
       {/* mobile sidebar */}
       <div className="flex-1 overflow-y-auto">
         {/* <Navbar /> */}
+
         <div className="p-4 2xl:px-10">
           <Outlet />
         </div>
@@ -33,7 +34,7 @@ function App() {
   return (
     <main>
       <Routes>
-        <Route element={<Layout />}>
+        {/* <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/task" element={<Task />} />
@@ -43,8 +44,19 @@ function App() {
           <Route path="/task/:id" element={<TaskDetails />} />
           <Route path="/users" element={<User />} />
           <Route path="/trash" element={<Trash />} />
-        </Route>
-        <Route path="/home" element={<HomePage />} />
+        </Route> */}
+
+        <Route element={<Layout />}></Route>
+        <Route path="/dashboard" element={<Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/task" element={<Task />} />
+        <Route path="/completed/:status" element={<Task />} />
+        <Route path="/in-progress/:status" element={<Task />} />
+        <Route path="/todo/:status" element={<Task />} />
+        <Route path="/task/:id" element={<TaskDetails />} />
+        <Route path="/users" element={<User />} />
+        <Route path="/trash" element={<Trash />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes>

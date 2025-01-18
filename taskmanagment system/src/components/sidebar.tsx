@@ -1,56 +1,12 @@
-import {
-  MdDashboard,
-  MdOutlineAddTask,
-  MdOutlinePendingActions,
-  MdSettings,
-  MdTaskAlt,
-} from "react-icons/md";
-import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
+import clsx from "clsx";
+import { MdOutlineAddTask, MdSettings } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { setOpenSidebar } from "../redux/slices/apiSlices";
-import clsx from "clsx";
-
-const linkData = [
-  {
-    label: "Dashboard",
-    link: "dashboard",
-    icon: <MdDashboard />,
-  },
-  {
-    label: "Tasks",
-    link: "tasks",
-    icon: <FaTasks />,
-  },
-  {
-    label: "Completed",
-    link: "completed/completed",
-    icon: <MdTaskAlt />,
-  },
-  {
-    label: "In Progress",
-    link: "in-progress/in progress",
-    icon: <MdOutlinePendingActions />,
-  },
-  {
-    label: "To Do",
-    link: "todo/todo",
-    icon: <MdOutlinePendingActions />,
-  },
-  {
-    label: "Team",
-    link: "team",
-    icon: <FaUsers />,
-  },
-  {
-    label: "Trash",
-    link: "trashed",
-    icon: <FaTrashAlt />,
-  },
-];
+import { linkData } from "../assets/data/data";
+import { setOpenSidebar } from "../redux/slices/authSlices";
 
 const Sidebar = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -63,13 +19,13 @@ const Sidebar = () => {
     dispatch(setOpenSidebar(false));
   };
 
-  const NavLink = ({ el }) => {
+  const NavLink = ({ el }: { el: any }) => {
     return (
       <Link
         to={el.link}
         onClick={closeSidebar}
         className={clsx(
-          "w-full lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
+          "w-full lg:w-1/4 flex gap-2 px-3 py-2 rounded-full items-center text-green-800 text-base hover:bg-[#2564ed2d]",
           path === el.link.split("/")[0] ? "bg-blue-700 text-neutral-100" : ""
         )}
       >
