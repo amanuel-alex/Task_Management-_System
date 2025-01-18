@@ -23,7 +23,7 @@ const TextBox = React.forwardRef<HTMLInputElement, TextBoxProps>(
     return (
       <div className="w-full flex flex-col gap-1">
         {label && (
-          <label htmlFor={name} className="text-gray-700">
+          <label htmlFor={name} className="text-gray-400">
             {label}
           </label>
         )}

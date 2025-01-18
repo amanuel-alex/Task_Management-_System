@@ -44,9 +44,9 @@ function App() {
           <Route path="/users" element={<User />} />
           <Route path="/trash" element={<Trash />} />
         </Route>
+        <Route path="/home" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<HomePage />} />
       </Routes>
       <Toaster richColors />
     </main>

@@ -4,9 +4,8 @@ import { useSelector } from "react-redux"; // Assuming you are using Redux for s
 
 const MainBody = () => {
   const { user } = useSelector((state: any) => state.auth); // Get user state from Redux
-
   return (
-    <div className="w-full flex justify-center items-center  mt-[78px] min-h-8 flex-col lg:flex-row bg-[#78c04f]">
+    <div className="w-full flex justify-center items-center  mt-[78px] min-h-8 flex-col lg:flex-row bg-[#569b72]">
       <img src={bgImage} alt="Background" />
       <div className="w-full h-full lg:w-2/3 flex flex-col justify-center items-center">
         <div className="w-full md:max-w-lg flex flex-col justify-center items-center gap-5 md:gap-y-10 md:-mt-20 md:text-7xl">
