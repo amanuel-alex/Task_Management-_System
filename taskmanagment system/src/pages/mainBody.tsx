@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Managers from "../assets/managersimage.png";
-import bgImage from "../assets/Task_managment.png";
+import Managers from "../assets/upmanagers.png";
+import bgImage from "../assets/upTask.png";
 import { useSelector } from "react-redux"; // Assuming you are using Redux for state management
 
 const MainBody = () => {

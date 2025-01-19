@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TextBox from "../components/TextBox";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
-
+import axios from "axios";
 const signupSchema = z.object({
   username: z
     .string()
@@ -46,16 +46,18 @@ const SignUp = () => {
     }
   }, [user, navigate]);
 
-  const onSubmit = async (data: any) => {
+  const [name, setName] = useState();
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
+  const onSubmit = (e: { preventDefault: () => void }) => {
     try {
-      // Manually validate the data with Zod
-      signupSchema.parse(data); // If there's a validation error, it will throw
-
-      console.log("SignUp data:", data);
+      e.preventDefault();
+      axios
+        .post("http://localhost:3001/registration", { name, email, password })
+        .then((result) => console.log(result))
+        .catch((err) => console.log(err));
       navigate("/login");
-    } catch (error) {
-      // If Zod throws an error, we map it to the React Hook Form errors
-    }
+    } catch (error) {}
   };
 
   return (
@@ -91,6 +93,7 @@ const SignUp = () => {
                 className="w-full rounded-full"
                 register={register}
                 error={errors.username}
+                onClick={(e) => setName(e.target.value)}
               />
               <TextBox
                 placeholder="email@example.com"
@@ -100,6 +103,7 @@ const SignUp = () => {
                 className="w-full rounded-full"
                 register={register}
                 error={errors.email}
+                onClick={(e) => setemail(e.target.value)}
               />
               <TextBox
                 placeholder="your password"
@@ -109,6 +113,7 @@ const SignUp = () => {
                 className="w-full rounded-full"
                 register={register}
                 error={errors.password}
+                onClick={(e) => setpassword(e.target.value)}
               />
               <TextBox
                 placeholder="confirm your password"
