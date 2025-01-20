@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import TextBox from "../components/TextBox";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
 import axios from "axios";
+
 const signupSchema = z.object({
   username: z
     .string()
@@ -26,19 +28,29 @@ const signupSchema = z.object({
       "Password must contain at least one special character"
     )
     .nonempty("Password is required"),
-  confirmPassword: z.string().nonempty("Confirm Password is required"),
+  confirmPassword: z
+    .string()
+    .nonempty("Confirm Password is required")
+    .refine(
+      (val, ctx) => val === ctx.parent.password, // This compares confirmPassword to password
+      {
+        message: "Passwords don't match", // Custom error message
+      }
+    ),
 });
 
 const SignUp = () => {
   const { user } = useSelector((state: any) => state.auth);
+  const navigate = useNavigate();
+
+  // Use zodResolver to connect React Hook Form with the Zod schema
   const {
     register,
     handleSubmit,
-
     formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
+  } = useForm({
+    resolver: zodResolver(signupSchema), // Hook up zod schema validation
+  });
 
   useEffect(() => {
     if (user) {
@@ -46,18 +58,29 @@ const SignUp = () => {
     }
   }, [user, navigate]);
 
-  const [name, setName] = useState();
-  const [email, setemail] = useState();
-  const [password, setpassword] = useState();
-  const onSubmit = (e: { preventDefault: () => void }) => {
+  const onSubmit = async (data: any) => {
     try {
-      e.preventDefault();
-      axios
-        .post("http://localhost:3001/registration", { name, email, password })
-        .then((result) => console.log(result))
-        .catch((err) => console.log(err));
+      // Log the form data to the console
+      console.log("Form Data: ", data);
+
+      const { username, email, password } = data;
+
+      // Make the API request using axios
+      const response = await axios.post("http://localhost:3001/registration", {
+        username,
+        email,
+        password,
+      });
+
+      // Log the response from the server
+      console.log("Response from server: ", response);
+
+      // Navigate to the login page after successful registration
       navigate("/login");
-    } catch (error) {}
+    } catch (error) {
+      // Log the error if the request fails
+      console.error("Error occurred during registration: ", error);
+    }
   };
 
   return (
@@ -71,10 +94,10 @@ const SignUp = () => {
             </p>
           </div>
         </div>
-        <div className="w-full bg-[#03140a] rounded-lg border-t-8 border-t-green-400  shadow-lg md:w-1/3  md:p-1 flex justify-center items-center flex-col">
+        <div className="w-full bg-[#03140a] rounded-lg border-t-8 border-t-green-400 shadow-lg md:w-1/3 md:p-1 flex justify-center items-center flex-col">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="form-container w-full md:w-[400px] flex flex-col gap-y-8 px-10 "
+            className="form-container w-full md:w-[400px] flex flex-col gap-y-8 px-10"
           >
             <div>
               <p className="text-blue-600 text-3xl capitalize font-bold text-center">
@@ -87,13 +110,12 @@ const SignUp = () => {
             <div className="flex flex-col gap-y-5">
               <TextBox
                 placeholder="Username"
-                type="text"
+                type="string"
                 name="username"
                 label="Username"
                 className="w-full rounded-full"
                 register={register}
                 error={errors.username}
-                onClick={(e) => setName(e.target.value)}
               />
               <TextBox
                 placeholder="email@example.com"
@@ -103,7 +125,6 @@ const SignUp = () => {
                 className="w-full rounded-full"
                 register={register}
                 error={errors.email}
-                onClick={(e) => setemail(e.target.value)}
               />
               <TextBox
                 placeholder="your password"
@@ -113,7 +134,6 @@ const SignUp = () => {
                 className="w-full rounded-full"
                 register={register}
                 error={errors.password}
-                onClick={(e) => setpassword(e.target.value)}
               />
               <TextBox
                 placeholder="confirm your password"

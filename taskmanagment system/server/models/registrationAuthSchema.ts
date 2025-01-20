@@ -38,7 +38,7 @@ RegistrationSchema.pre<IRegistration>("save", async function (next) {
     this.password = hashedPassword;
     next();
   } catch (error) {
-    next(error);
+    error;
   }
 });
 

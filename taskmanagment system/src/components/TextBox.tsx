@@ -9,7 +9,7 @@ import {
 
 // Define the types for the props
 interface TextBoxProps {
-  type?: "text" | "password" | "email" | "number" | "tel" | "url" | "submit";
+  type?: "string" | "password" | "email" | "number" | "tel" | "url" | "submit";
   placeholder?: string;
   label: string;
   name: string;
